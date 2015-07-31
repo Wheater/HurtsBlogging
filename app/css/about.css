@@ -1,0 +1,11 @@
+.circle-base {
+    border-radius: 50%;
+    behavior: url(PIE.htc); /* remove if you don't care about IE8 */
+}
+
+.person-face {
+    width: 300px;
+    height: 300px;
+    background: yellow;
+    border: 2px black solid;
+}
