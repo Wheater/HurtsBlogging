@@ -1,6 +1,7 @@
 var app = angular.module('hurtApp', 
                         ['ngRoute'
-                       , 'ngMessages']);
+                       , 'ngMessages'
+                       , 'textAngular']);
 
 app.config(['$routeProvider', '$logProvider',
   function($routeProvider, $logProvider) {
@@ -41,6 +42,9 @@ app.config(['$routeProvider', '$logProvider',
         resolve: {
           blogTypes: function(blogTypesFactory){
             return blogTypesFactory.getBlogTypes();
+          },
+          blogList: function(blogsByUserFactory){
+            return blogsByUserFactory.getBlogPostsByUser();
           }
         }
       }).

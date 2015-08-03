@@ -1,60 +1,94 @@
 <!-- Insert post view -->
-<!-- wysihtml5 parser rules -->
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
 <div>
   <div class="row">
-    <div class="jumbotron col-md-10 col-xs-offset-1 text-center">
-      <h2>Add a New Post</h2>
+    <div class="jumbotron-partial col-md-10 col-xs-offset-1 text-center">
+      <h2>Add or update a post</h2>
       <hr>
     </div>
   </div>
   <form novalidate class="simple-form" name="postForm">
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-10 col-xs-offset-1 form-group">
-          <label for="subject">Subject</label>
-          <input type="text" name="subject" ng-model="post.subject" 
-                 class="form-control" id="subject"
-                 required>
-           <div class="help-block" 
-                ng-messages="postForm.subject.$error" 
-                ng-if="postForm.subject.$touched">
-              <p ng-message="required">Please enter a subject</p>
-           </div>
-        </div>
-      </div>
       <div class="clear-fix"></div>
       <div class="row">
         <div class="col-xs-10 col-xs-offset-1 form-group">
-          <label for="body">Body</label>
-          <textarea class="form-control" ng-model="post.body"
-                    rows="10" id="body"
-                    name="body"
-                    required></textarea>
-          <div class="help-block" 
-                ng-messages="postForm.body.$error" 
-                ng-if="postForm.body.$touched">
-              <p ng-message="required">Please enter a body</p>
-           </div>
-        </div>
-      </div>
-      <div class="clear-fix"></div>
-      <div class="row">
-        <div class="col-xs-10 col-xs-offset-1 form-group">
-          <label for="sel1">Blog Type</label>
-          <select class="form-control" id="sel1"
-                  ng-model="post.blogId"
-                  ng-options="b.Type for b in blogTypes track by b.ID"
-                  required>
+          <label for="selFormer">Past blogs and drafts</label>
+          <select class="form-control" id="selFormer"
+                  ng-model="formerPost"
+                  ng-options="b as b.Subject for b in blogList"
+                  ng-change="selectedIndexChanged(formerPost)"
+                  name = "blogId">
           </select>
         </div>
       </div>
       <div class="clear-fix"></div>
       <div class="row">
         <div class="col-xs-10 col-xs-offset-1 form-group">
-          <input type="submit" ng-click="submit(post)" 
-                  value="Submit" class="btn btn-primary"
+          <label for="subject">Subject</label>
+          <input type="text" name="subject" ng-model="formerPost.Subject" 
+                 class="form-control" id="subject"
+                 required>
+           <div class="help-block" 
+                ng-messages="subject.$error" 
+                ng-if="subject.$touched">
+              <p ng-message="required">Please enter a subject</p>
+           </div>
+        </div>
+      </div>
+      <!--<div class="clear-fix"></div>
+      <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 form-group">
+          <label for="body">Body</label>
+          <textarea class="form-control" ng-model="formerPost.Body"
+                    rows="10" id="body"
+                    name="body"
+                    required></textarea>
+          <div class="help-block" 
+                ng-messages="body.$error" 
+                ng-if="body.$touched">
+              <p ng-message="required">Please enter a body</p>
+           </div>
+        </div>
+      </div> -->
+      <div class="clear-fix"></div>
+      <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 form-group">
+          <label for="body">Body</label>
+            <div class=" form-group rich-text"
+               text-angular ng-model="formerPost.Body" 
+               name="demo-editor" 
+               ta-text-editor-class="border-around" 
+               ta-html-editor-class="border-around">
+           </div>
+         </div> 
+      </div>
+      <div class="clear-fix"></div>
+      <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 form-group">
+          <label for="sel1">Blog type</label>
+          <select class="form-control" id="sel1"
+                  ng-model="formerPost.blogtypeid"
+                  name = "blogTypeId"
+                  ng-options="b.ID as b.Type for b in blogTypes"
+                  required>
+          </select>
+          <div class="help-block" 
+                ng-messages="blogTypeId.$error" 
+                ng-if="blogTypeId.$touched">
+              <p ng-message="required">Please select a blog type</p>
+           </div>
+        </div>
+      </div>
+      <div class="clear-fix"></div>
+      <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 form-group">
+          <input type="submit" ng-click="submit(formerPost)" 
+                  value="Save" class="btn btn-primary"
                   ng-disabled="postForm.$invalid"
                   name="blogType" />
+          <span class="error-message"
+                ng-show="errorMessage">Error inserting or updating post
+          </span>
         </div>
       </div>
     </div>

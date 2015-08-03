@@ -17,6 +17,14 @@ router.get('/api/v1/getBlogTypes', function(req, res){
   })
 });
 
+router.post('/api/v1/getBlogPostsByUser', function(req, res){
+  console.log(req.body.userId);
+  var results = blogPosts.getPostsByUser(req.body.userId, function(results){
+    console.log(results);
+    return res.json(results);
+  })
+});
+
 //Get blog posts
 router.get('/api/v1/getBlogPosts', function(req, res) {
 
@@ -49,6 +57,42 @@ router.post('/api/v1/insertBlogPost', function(req, res) {
       }
       //MUST SEND A RESPONSE
       console.log('Success inserting post');
+      return res.send(result);
+
+    });
+});
+
+router.post('/api/v1/updateBlogPost', function(req, res) {
+
+    // Grab data from http request
+    // data MUST be sent as JSON from Angular
+    var data = [req.body.subject
+              , req.body.body
+              , req.body.blogId
+              , req.body.blogTypeId
+            ];
+
+    console.log(data);
+
+    for(var i = 0; i < data.length; i++){
+      if (data[i] === undefined){
+        console.log('errored out');
+        return res.send({
+          err: 'no undefined parameters allowed'
+        });
+      }
+    }
+
+    console.log('about to update');
+
+    blogPosts.updatePost(data, function(err, result){
+
+      if(err){
+        console.log("Error updating post: " + err);
+        return err;
+      }
+      //MUST SEND A RESPONSE
+      console.log('Success updating post');
       return res.send(result);
 
     });

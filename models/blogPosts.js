@@ -11,6 +11,7 @@ exports.getPostFeed = function getPostFeed(count, callback){
                                   ", \"PostDate\" " +
                                   ", \"FirstName\" || \' \' || \"LastName\"  AS Name " +
                                   ", \"Type\" " +
+                                  ", U.\"ID\" " +
                             "FROM \"BlogPost\" B " +
                             "INNER JOIN \"Users\" U ON U.\"ID\" = B.\"UserID\" " +
                             "INNER JOIN \"BlogTypes\" T ON T.\"ID\" = B.\"BlogID\" " +
@@ -62,6 +63,73 @@ exports.insertPost = function insertPost(data, callback){
     //this is a method of returning values asynchronously
     //rather than calling a return statement
     callback(err, result);
+  });
+};
+
+exports.updatePost = function updatePost(post, callback){
+
+  var results = [];
+  // SQL Query > Select Data
+  var query = db.textQuery("UPDATE \"BlogPost\"" + 
+                           "SET " +
+                           "\"Subject\" = $1," +
+                           "\"Body\" = $2, " +
+                           "\"BlogID\" = $4 " +
+                           "WHERE \"ID\" = $3"
+                          , post
+                          , function (err, rows, result){     
+    if(err) {
+      console.log(err);
+      callback(err, null);        
+      return;
+    }
+
+    // Stream results back one row at a time
+    for(var i = 0; i < rows.length; i++){
+      results.push(rows[i]);
+    }
+    //this is a method of returning values asynchronously
+    //rather than calling a return statement
+    callback(null, results);
+  });
+
+};
+
+
+/*
+ * Gets posts per user id for editing
+ */
+exports.getPostsByUser = function getPostsByUser(userId, callback){
+
+  var results = [];
+  // SQL Query > Select Data
+  var query = db.textQuery("SELECT  \"Subject\" " +
+                                  ", \"Body\" " +
+                                  ", \"PostDate\" " +
+                                  ", \"FirstName\" || \' \' || \"LastName\"  AS Name " +
+                                  ", \"Type\" " +
+                                  ", U.\"ID\"" +
+                                  ", B.\"ID\" AS BlogID " +
+                                  ", T.\"ID\" AS BlogTypeID " +
+                            "FROM \"BlogPost\" B " +
+                            "INNER JOIN \"Users\" U ON U.\"ID\" = B.\"UserID\" " +
+                            "INNER JOIN \"BlogTypes\" T ON T.\"ID\" = B.\"BlogID\" " +
+                            "WHERE U.\"ID\" = $1 "
+                          , [userId]
+                          , function (err, rows, result){     
+    if(err) {
+      console.log(err);
+      return;        
+    }
+
+    // Stream results back one row at a time
+    for(var i = 0; i < rows.length; i++){
+      results.push(rows[i]);
+    }
+
+    //this is a method of returning values asynchronously
+    //rather than calling a return statement
+    callback(results);
   });
 };
 
