@@ -1,12 +1,12 @@
 var app = angular.module('authModule');
 
-app.directive('googeAuthDirective', function(){
+app.directive('googleAuthDirective', function(){
   return {
-    bindToController: 'googleAuthController',
     restrict: 'E',
-    scope: {
 
-    },
-    templateUrl: 'googleLogin.html'
-  }
+	link: function(scope, element, attrs){
+		
+	},
+    templateUrl: '../authentication/googleLogin.html'
+  };
 });

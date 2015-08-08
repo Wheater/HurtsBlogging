@@ -3,7 +3,9 @@
     <div class="container-fluid">
     	<div class="row">
     		<div class="col-xs-10 col-xs-offset-1">
-    			<div class="blog-subject">
+    			<div class="blog-subject"
+               ng-click="$parent.postClicked(post)"
+               style="cursor: pointer;">
     			  <h3>{{post.Subject}}</h3>
     			</div>
         </div>

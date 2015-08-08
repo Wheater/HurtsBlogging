@@ -1,5 +1,5 @@
 var app = angular.module('hurtApp');
 
-app.controller('AboutController', function($scope){
-    $scope.message = "About the Hurts";
-  });
+app.controller('AboutController', ['$scope', '$window', '$location', 'authFactory', function($scope, $window, $location, authFactory){
+	
+  }]);

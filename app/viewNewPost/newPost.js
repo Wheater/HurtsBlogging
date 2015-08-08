@@ -2,15 +2,25 @@ var app = angular.module('hurtApp');
 
 app.controller('NewPostController'
           , ['$scope'
+          , '$rootScope'
+					, '$window'
+					, '$location'
           , 'blogPostInsertFactory'
           , 'blogTypes'
           , 'blogList'
-          , function($scope, blogPostInsertFactory, blogTypes, blogList){
+          , 'statusList'
+					, 'authFactory'
+          , function($scope, $rootScope, $window, $location, blogPostInsertFactory, blogTypes, blogList, statusList, authFactory){
+
+	//check if user is logged in
+	if ($rootScope.loggedIn == false) {
+		$location.path("views/login");
+	}				
 
   $scope.blogTypes = blogTypes.data;
   $scope.blogList = blogList.data;
+  $scope.statusList = statusList.data;
   //new vs. update
-  $scope.newPost = true;
   //bool for showing error on submit
   $scope.errorMessage = false;
   //
@@ -20,17 +30,13 @@ app.controller('NewPostController'
   $scope.formerPost.Body = 'Enter content here...';
 
   //add blank entry option
-  $("#selFormer").prepend("<option value=''></option>");
+  $("#selFormer").prepend("<option value=''>Create a new post!</option>");
 
   $scope.selectedIndexChanged = function(){
 
     if($('#selFormer option:selected').index() != 0){
-
       $scope.postForm.subject.$setValidity('required', true);
-      $scope.newPost = false;
     } else{
-
-      $scope.newPost = true;
       $scope.postForm.subject.$setValidity('required', false);
     }
   }
@@ -40,12 +46,15 @@ app.controller('NewPostController'
     //add error handling...don't unload the form if
     //there was an error
 
-    if($scope.newPost){
+    if($('#selFormer option:selected').index() == 0){
       blogPostInsertFactory.insertBlogPost({
         subject: $scope.formerPost.Subject,
         body: $scope.formerPost.Body,
         blogId: $scope.formerPost.blogtypeid,
-        userId: 3
+        userId: $window.sessionStorage.currentUserID,
+        postStatusId: $scope.formerPost.PostStatusID,
+        //idToken used to verify user before allowing post
+        idToken: $rootScope.googleUser.getBasicProfile().getId()
       });
 
       $scope.formerPost = null;
@@ -57,7 +66,10 @@ app.controller('NewPostController'
           subject: $scope.formerPost.Subject,
           body: $scope.formerPost.Body,
           blogId: $scope.formerPost.blogid,
-          blogTypeId: $scope.formerPost.blogtypeid
+          blogTypeId: $scope.formerPost.blogtypeid,
+          postStatusId: $scope.formerPost.PostStatusID,
+          //userId used to verify user before allowing post
+          userId: $rootScope.googleUser.getBasicProfile().getId()
         })
         .then(function(response){
           //on success/error, load red/green

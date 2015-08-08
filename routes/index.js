@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var blogPosts = require('../models/blogPosts');
 var blogTypes = require('../models/blogTypes');
+var users = require('../models/users');
+var http = require('http');
+//var users = require('../models/users');
 
 
 /* GET home page. */
@@ -12,6 +15,21 @@ router.get('/', function(req, res, next) {
 /* GET blog types */
 router.get('/api/v1/getBlogTypes', function(req, res){
   var results = blogTypes.getBlogTypes(function(results){
+    console.log(results);
+    return res.json(results);
+  })
+});
+
+/* GET blog types */
+router.get('/api/v1/getPostById', function(req, res){
+  var results = blogPosts.getPostById(req.query.id, function(results){
+    console.log(results);
+    return res.json(results);
+  })
+});
+
+router.get('/api/v1/getPostStatuses', function(req, res){
+  var results = blogTypes.getPostStatuses(function(results){
     console.log(results);
     return res.json(results);
   })
@@ -38,28 +56,41 @@ router.get('/api/v1/getBlogPosts', function(req, res) {
 //Insert blog post
 router.post('/api/v1/insertBlogPost', function(req, res) {
 
-    // Grab data from http request
-    // data MUST be sent as JSON from Angular
-    var data = [req.body.subject
-              , req.body.body
-              , req.body.blogId
-              , req.body.userId
-              , req.body.postDate
-            ];
+  // Grab data from http request
+  // data MUST be sent as JSON from Angular
+  var data = [req.body.subject
+            , req.body.body
+            , req.body.blogId
+            , req.body.userId
+            , req.body.postDate
+            , req.body.postStatusId
+          ];
 
-    console.log(data);
+  var currentUser = req.body.idToken;
 
-    blogPosts.insertPost(data, function(err, result){
+  //verify user before allowing post
+  var results = users.verifyUser([currentUser],
+                                  function(results){
+    console.log(results);
+    if(results.length == 0){
+      return res.send({
+        err: 'user not authenticated'
+      });
+    } //post if user is authenticated 
+    else {
+      blogPosts.insertPost(data, function(err, result){
 
-      if(err){
-        console.log("Error inserting post: " + err);
-        return err;
-      }
-      //MUST SEND A RESPONSE
-      console.log('Success inserting post');
-      return res.send(result);
+        if(err){
+          console.log("Error inserting post: " + err);
+          return err;
+        }
+        //MUST SEND A RESPONSE
+        console.log('Success inserting post');
+        return res.send(result);
 
-    });
+      });
+    }      
+  });
 });
 
 router.post('/api/v1/updateBlogPost', function(req, res) {
@@ -70,32 +101,48 @@ router.post('/api/v1/updateBlogPost', function(req, res) {
               , req.body.body
               , req.body.blogId
               , req.body.blogTypeId
+              , req.body.postStatusId
             ];
 
-    console.log(data);
+    var currentUser = req.body.userId;
 
-    for(var i = 0; i < data.length; i++){
-      if (data[i] === undefined){
-        console.log('errored out');
+    //verify user before allowing post
+    var results = users.verifyUser([currentUser],
+                                    function(results){
+      console.log(results);
+      if(results.length == 0){
         return res.send({
-          err: 'no undefined parameters allowed'
+          err: 'user not authenticated'
+        });
+      } //post if user is authenticated 
+      else {
+        for(var i = 0; i < data.length; i++){
+          if (data[i] === undefined){
+            console.log('errored out');
+            return res.send({
+              err: 'no undefined parameters allowed'
+            });
+          }
+        }
+
+        console.log('about to update');
+
+        blogPosts.updatePost(data, function(err, result){
+
+          if(err){
+            console.log("Error updating post: " + err);
+            return err;
+          }
+          //MUST SEND A RESPONSE
+          console.log('Success updating post');
+          return res.send(result);
+
         });
       }
-    }
-
-    console.log('about to update');
-
-    blogPosts.updatePost(data, function(err, result){
-
-      if(err){
-        console.log("Error updating post: " + err);
-        return err;
-      }
-      //MUST SEND A RESPONSE
-      console.log('Success updating post');
-      return res.send(result);
-
     });
+    
+  
+    
 });
 
 //Get blog posts

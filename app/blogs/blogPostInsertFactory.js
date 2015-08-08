@@ -20,7 +20,7 @@ app.factory('blogPostInsertFactory', ['$http', '$filter', function($http, $filte
         },
 
       updateBlogPost: function(post) {
-
+        
           var promise = $http.post('/api/v1/updateBlogPost', post).
             then(function(response) {
 

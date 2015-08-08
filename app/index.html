@@ -7,26 +7,28 @@
   </head>
   <body>
     <div id="wrapper">
-      <div class="sidebar">
-        <ul class="sidebar-nav text-center">
-          <li><a href="#views/home">Home</a></li>
-          <li><a href="#views/software">Software Blog</a></li>
-          <li><a href="#views/family">Family Blog</a></li>
-          <li><a href="#views/about">About Us</a></li>
-          <li><a href="#views/login">Login</a></li>
-        </ul>
-        <img src="images/imgSidebar.jpg"/>
-      </div>
-      
-      <div class="front-page">
-        <div id="sidebar-toggle">
-        </div>
-        <div class="content">
-          <div ng-view></div>
-        </div>
-      </div>
-    </div>
-
+			<div ng-controller="SidebarController">
+				<div class="sidebar">
+					<ul class="sidebar-nav text-center">
+						<li><a href="#views/home">Home</a></li>
+						<li><a href="#views/software">Software Blog</a></li>
+						<li><a href="#views/family">Family Blog</a></li>
+						<li><a href="#views/about">About Us</a></li>
+						<li ng-show="loggedIn"><a href="#views/newPost">Prepare Content</a></li>
+						<li ng-hide="loggedIn"><a href="#views/login">Login</a></li>
+						<li ng-show="loggedIn"><a href="#views/login">Logout</a></li>
+					</ul>
+					<img src="images/imgSidebar.jpg"/>
+				</div>
+				<div class="front-page">
+					<div id="sidebar-toggle">
+					</div>
+					<div class="content">
+						<div ng-view></div>
+					</div>
+				</div>
+			</div>
+		</div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-route.js"></script>
@@ -37,17 +39,26 @@
     <script src="js/textAngular-sanitize.min.js" type="text/javascript"></script>
     <script src="js/textAngular.min.js" type="text/javascript"></script>
     <script src="modules/hurtApp.js"></script>
+		<script src="js/sidebar.js" type="text/javascript"></script>
+		<script src="authentication/authModule.js"></script>
+		<script src="authentication/authFactory.js"></script>
+		<script src="authentication/googleAuthController.js"></script>
+		<script src="authentication/googleAuthDirective.js"></script>
     <script src="js/index.js"></script>
     <script src="blogs/blogPostFactory.js"></script>
     <script src="blogs/blogPostInsertFactory.js"></script>
+    <script src="blogs/postStatusFactory.js"></script>
     <script src="blogs/blogTypesFactory.js"></script>
     <script src="blogs/blogsByUserFactory.js"></script>
     <script src="viewHome/home.js"></script>
     <script src="viewAbout/about.js"></script>
     <script src="viewSoftware/software.js"></script>
     <script src="viewFamily/family.js"></script>
+		<script src="viewLogin/login.js"></script>
+		<script src="viewAbout/about.js"></script>
     <script src="blogs/blogListController.js"></script>
     <script src="viewNewPost/newPost.js"></script>
     <script src="blogs/blogListDirective.js"></script>
+		<script src="js/googleLogin.js"></script>
   </body>
 </html>

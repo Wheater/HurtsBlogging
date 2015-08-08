@@ -1,10 +1,10 @@
 var app = angular.module('hurtApp');
 
-app.factory('blogTypesFactory', ['$http', function($http) {
+app.factory('postStatusFactory', ['$http', function($http) {
   return {
-      getBlogTypes: function() {
+      getPostStatuses: function() {
 
-        var promise = $http.get('/api/v1/getBlogTypes').
+        var promise = $http.get('/api/v1/getPostStatuses').
           success(function(data, status, headers, config) {
             return data;
           }).

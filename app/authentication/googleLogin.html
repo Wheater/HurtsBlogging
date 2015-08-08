@@ -1,7 +1,12 @@
-<script src="https://apis.google.com/js/platform.js" async defer>
-</script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-client_id" content="609720018600-rrbs1smkiftpieclj085qcgrelaib7iv.apps.googleusercontent.com">
-<div ng-controller="googleAuthController">
-  <div class="g-signin2" data-onsuccess="onSignIn"></div>
-  <a href="#" onclick="signOut();">Sign out</a>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-xs-10 col-xs-offset-1">
+			<div id="googleAuthListener" ng-controller="googleAuthController">
+				<div class="g-signin2 auth" ng-hide="loggedIn" data-theme="dark" data-onsuccess="onSignIn"></div>
+				<div class="btn btn-primary" ng-show="loggedIn" ng-click="signOut()">{{message}}</div>
+			</div>	
+		</div>
+	</div>
 </div>

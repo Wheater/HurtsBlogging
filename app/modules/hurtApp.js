@@ -1,7 +1,8 @@
 var app = angular.module('hurtApp', 
                         ['ngRoute'
                        , 'ngMessages'
-                       , 'textAngular']);
+                       , 'textAngular'
+											 , 'authModule']);
 
 app.config(['$routeProvider', '$logProvider',
   function($routeProvider, $logProvider) {
@@ -12,7 +13,15 @@ app.config(['$routeProvider', '$logProvider',
       }).
       when('/views/home', {
         templateUrl: 'viewHome/home.html',
-        controller: 'HomeController'
+        controller: 'BlogListController',
+        resolve: {
+          data: function(blogPostFactory){
+            return blogPostFactory.getBlogPostsByType('All');
+          },
+          preview: function(){
+            return 'false';
+          }
+        }
       }).
       when('/views/login', {
         templateUrl: 'viewLogin/login.html',
@@ -24,6 +33,9 @@ app.config(['$routeProvider', '$logProvider',
         resolve: {
           data: function(blogPostFactory){
             return blogPostFactory.getBlogPostsByType('Software');
+          }, 
+          preview: function(){
+            return 'true';
           }
         }
       }).
@@ -33,6 +45,21 @@ app.config(['$routeProvider', '$logProvider',
         resolve: {
           data: function(blogPostFactory){
             return blogPostFactory.getBlogPostsByType('Family');
+          },
+          preview: function(){
+            return 'true';
+          }
+        }
+      }).
+      when('/views/singlePost/:id', {
+        templateUrl: 'viewSinglePost/singlePost.html',
+        controller: 'BlogListController',
+        resolve: {
+          data: function($route, blogPostFactory){
+            return blogPostFactory.getPostById($route.current.params.id);
+          },
+          preview: function(){
+            return 'false';
           }
         }
       }).
@@ -45,6 +72,9 @@ app.config(['$routeProvider', '$logProvider',
           },
           blogList: function(blogsByUserFactory){
             return blogsByUserFactory.getBlogPostsByUser();
+          },
+          statusList: function(postStatusFactory){
+            return postStatusFactory.getPostStatuses();
           }
         }
       }).
@@ -52,6 +82,10 @@ app.config(['$routeProvider', '$logProvider',
         redirectTo: '/views/home'
       });
   }]);
+	
+	app.run(function($rootScope, $window){
+		$rootScope.loggedIn = false;		
+	})
 
 app.controller('IndexController', function($scope){
   $scope.message = "Hello World!";

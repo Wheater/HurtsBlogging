@@ -35,21 +35,6 @@
            </div>
         </div>
       </div>
-      <!--<div class="clear-fix"></div>
-      <div class="row">
-        <div class="col-xs-10 col-xs-offset-1 form-group">
-          <label for="body">Body</label>
-          <textarea class="form-control" ng-model="formerPost.Body"
-                    rows="10" id="body"
-                    name="body"
-                    required></textarea>
-          <div class="help-block" 
-                ng-messages="body.$error" 
-                ng-if="body.$touched">
-              <p ng-message="required">Please enter a body</p>
-           </div>
-        </div>
-      </div> -->
       <div class="clear-fix"></div>
       <div class="row">
         <div class="col-xs-10 col-xs-offset-1 form-group">
@@ -76,6 +61,23 @@
                 ng-messages="blogTypeId.$error" 
                 ng-if="blogTypeId.$touched">
               <p ng-message="required">Please select a blog type</p>
+           </div>
+        </div>
+      </div>
+      <div class="clear-fix"></div>
+      <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 form-group">
+          <label for="sel1">Post/draft</label>
+          <select class="form-control" id="sel1"
+                  ng-model="formerPost.PostStatusID"
+                  name = "PostStatusID"
+                  ng-options="s.ID as s.Status for s in statusList"
+                  required>
+          </select>
+          <div class="help-block" 
+                ng-messages="PostStatusID.$error" 
+                ng-if="PostStatusID.$touched">
+              <p ng-message="required">Please select a post status</p>
            </div>
         </div>
       </div>

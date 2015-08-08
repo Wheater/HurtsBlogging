@@ -3,6 +3,27 @@
   color: red;
 }
 
+.jumbotron.home {
+  background: url("../../images/homepage.png") no-repeat center center;
+  width:100%;
+  height: 50vh;
+  min-height: 300px;
+}
+
+.home > h1 {
+  color: white;
+  top: 25vh;
+  text-align: left;
+  margin-left: 15%;
+  padding-top: 100px;
+  font-weight: lighter;
+}
+
+.home > p {
+  color: white;
+  text-align: left;
+  margin-left: 15%;
+}
 
 .front-page {
   padding-left: 250px;
@@ -201,6 +222,14 @@
 /* Form class */
 .help-block > p {
   color: red;
+}
+
+/* Auth controls */
+
+.auth {
+	display: inline-block;
+	margin: auto;
+	padding: 30px;
 }
 
 @media(min-width:768px) {

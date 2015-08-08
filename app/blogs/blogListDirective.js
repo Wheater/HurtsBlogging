@@ -5,8 +5,15 @@ app.directive('blogList', function() {
     
     restrict: 'EA',
     scope: {
-      type: '=',
+      type: '='
     },
-    templateUrl: '../templates/blogPosts.html',
+    controller: function($scope, $attrs, $location){
+      $scope.postClicked = function(post){
+        if(post.blogid > 0){
+          $location.path('/views/singlePost/' + post.blogid);
+        }
+      }
+    },
+    templateUrl: '../templates/blogPosts.html'
   }
 })
