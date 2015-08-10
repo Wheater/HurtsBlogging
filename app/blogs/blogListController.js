@@ -31,13 +31,13 @@ app.controller('BlogListController'
     $scope.homePosts = noResultsPost;
   } else {
 
-    if(preview == 'true'){
+    if(preview == true){
 
       var previewString = '';
       for(var j = 0; j < data.data.length; j++){
         var bodyArray = data.data[j].Body.split(' ');
-
-        data.data[j].Body = bodyArray.slice(0, wordCount).join(' ');
+        bodyArray = bodyArray.slice(0, wordCount);
+        data.data[j].Body = bodyArray.join(' ');
       } 
     } else {
         $scope.identifier = data.data[0].blogid;

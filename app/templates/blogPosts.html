@@ -12,11 +12,17 @@
       </div>
       <div class="row">
         <div class="col-xs-12 col-md-10 col-md-offset-1">
-          <span style="float:right;">{{post.name}} | {{post.PostDate | date: 'medium'}}</span>
+          <span style="padding-bottom: 15px; float:right;">{{post.name}} | {{post.PostDate | date: 'medium'}}</span>
         </div>
       </div>
       <div class="row">
         <div data-ng-bind-html="post.Body" class="col-xs-12 col-md-10 col-md-offset-1">
+        </div>
+      </div>
+      <div class="row">
+        <div class="post-link col-xs-12 cold-md-10 col-md-offset-1"
+               ng-click="$parent.postClicked(post)">
+            Read the full article here...
         </div>
       </div>
     </div>

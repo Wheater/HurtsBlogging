@@ -2,6 +2,17 @@
 .error-message{
   color: red;
 }
+.success-message{
+  color: green;
+}
+
+.post-link{
+  color: #CC9900;
+}
+.post-link:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
 
 .jumbotron.home {
   background: url("../../images/homepage.png") no-repeat center center;

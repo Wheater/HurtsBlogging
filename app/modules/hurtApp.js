@@ -21,7 +21,7 @@ app.config(['$routeProvider', '$locationProvider',
             return blogPostFactory.getBlogPostsByType('All');
           },
           preview: function(){
-            return 'false';
+            return false;
           }
         }
       }).
@@ -37,7 +37,7 @@ app.config(['$routeProvider', '$locationProvider',
             return blogPostFactory.getBlogPostsByType('Software');
           }, 
           preview: function(){
-            return 'true';
+            return true;
           }
         }
       }).
@@ -49,7 +49,7 @@ app.config(['$routeProvider', '$locationProvider',
             return blogPostFactory.getBlogPostsByType('Family');
           },
           preview: function(){
-            return 'true';
+            return true;
           }
         }
       }).
@@ -61,7 +61,7 @@ app.config(['$routeProvider', '$locationProvider',
             return blogPostFactory.getPostById($route.current.params.id);
           },
           preview: function(){
-            return 'false';
+            return false;
           }
         }
       }).
