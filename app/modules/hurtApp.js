@@ -2,10 +2,12 @@ var app = angular.module('hurtApp',
                         ['ngRoute'
                        , 'ngMessages'
                        , 'textAngular'
+                       , 'angularUtils.directives.dirDisqus'
 											 , 'authModule']);
 
-app.config(['$routeProvider', '$logProvider',
-  function($routeProvider, $logProvider) {
+app.config(['$routeProvider', '$locationProvider',
+  function($routeProvider, $locationProvider) {
+    $locationProvider.html5Mode(true);
     $routeProvider.
       when('/views/about', {
         templateUrl: 'viewAbout/about.html',

@@ -2,7 +2,7 @@
   <div ng-repeat="post in type">
     <div class="container-fluid">
     	<div class="row">
-    		<div class="col-xs-10 col-xs-offset-1">
+    		<div class="col-xs-12 col-md-10 col-md-offset-1">
     			<div class="blog-subject"
                ng-click="$parent.postClicked(post)"
                style="cursor: pointer;">
@@ -11,12 +11,12 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-10 col-xs-offset-1">
-          <p style="float:right;">{{post.name}} | {{post.PostDate | date: 'medium'}}</p>
+        <div class="col-xs-12 col-md-10 col-md-offset-1">
+          <span style="float:right;">{{post.name}} | {{post.PostDate | date: 'medium'}}</span>
         </div>
       </div>
       <div class="row">
-        <div data-ng-bind-html="post.Body" class="col-xs-10 col-xs-offset-1">
+        <div data-ng-bind-html="post.Body" class="col-xs-12 col-md-10 col-md-offset-1">
         </div>
       </div>
     </div>

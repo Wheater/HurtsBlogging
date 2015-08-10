@@ -12,7 +12,6 @@ var app = express();
 
 // view engine setup
 app.set('port', process.env.PORT || 9001);
-app.use(express.static(__dirname + 'app'));
 //app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -26,6 +25,13 @@ app.use(express.static(path.join(__dirname, 'app')));
 
 app.use('/', routes);
 app.use('/', users);
+
+//only need in html5mode = true 
+//to redirect pages through index.html
+//http://stackoverflow.com/questions/16569841/angularjs-html5-mode-reloading-the-page-gives-wrong-get-request/16570533#16570533
+app.use(function(req, res) {
+    res.sendfile(__dirname + '/app/index.html');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

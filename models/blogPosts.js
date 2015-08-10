@@ -49,6 +49,7 @@ exports.getPostById = function getPostById(id, callback){
                                   ", \"FirstName\" || \' \' || \"LastName\"  AS Name " +
                                   ", \"Type\" " +
                                   ", U.\"ID\" " +
+                                  ", B.\"ID\" AS BlogID " + 
                             "FROM \"BlogPost\" B " +
                             "INNER JOIN \"Users\" U ON U.\"ID\" = B.\"UserID\" " +
                             "INNER JOIN \"BlogTypes\" T ON T.\"ID\" = B.\"BlogID\" " +

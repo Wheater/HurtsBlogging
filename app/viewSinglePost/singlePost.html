@@ -1,6 +1,8 @@
 
 <div class="single-post col-xs-12 col-md-10 col-md-offset-1">
-  <blog-list type="familyPosts" 
-             word-count="5"
-             context="preview"></blog-list>
+  <blog-list type="familyPosts"></blog-list>
+  <dir-disqus disqus-shortname="hurtsblogging"
+              disqus-identifier="{{ identifier }}"
+              disqus-url="{{ url }}" class="col-xs-10 col-xs-offset-1">
+  </dir-disqus>
 </div>

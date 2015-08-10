@@ -38,8 +38,11 @@ app.controller('BlogListController'
         var bodyArray = data.data[j].Body.split(' ');
 
         data.data[j].Body = bodyArray.slice(0, wordCount).join(' ');
+      } 
+    } else {
+        $scope.identifier = data.data[0].blogid;
+        $scope.url = 'http://www.hurtsblogging.com/views/singlePost/' + data.data[0].blogid;
       }
-    } 
     $scope.familyPosts = data.data;
     $scope.familyPosts.Body = $sce.trustAsHtml(data.data.Body);
     $scope.softwarePosts = data.data;
