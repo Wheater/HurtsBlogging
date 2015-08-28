@@ -33,20 +33,28 @@ router.get('/api/addSitemapEntry/:type/:id', function(req, res, next) {
 function getLastMod(date){
   //date look like: 2015-08-10-T03:35:15+00:00
   //format new date to match url file requirements
+  if(date == null)
+    date = new Date();
+
   var dateString = date.getFullYear() + '-' + 
-             (date.getMonth()+1) + '-' + 
-             date.getDate() + '-' +
-             'T' + date.getHours() + ':' +
-             date.getMinutes() + ':' + 
-             date.getSeconds() + '+00:00';
+             padFront((date.getMonth()+1)) + '-' + 
+             (date.getDate()) + '-' +
+             'T' + padFront(date.getHours()) + ':' +
+             padFront(date.getMinutes()) + ':' + 
+             padFront(date.getSeconds()) + '+00:00';
   return '<lastmod>' + dateString + '</lastmod>';
 }
 //form url from type and id
 function getLoc(type, id){
   var baseUrl = 'http://hurtsblogging.com';
 
+  if(id == null || id <= 0)
+    throw "no id provided";
+
   if(type == 'singlePost'){
     var fullUrl = baseUrl + '/views/singlePost/' + id;
+  } else {
+    throw "no type provided";
   }
 
   return '<loc>' + fullUrl + '</loc>';
@@ -55,6 +63,12 @@ function getLoc(type, id){
 function getNewFileData(type, id, currentFileData, date){
 
   var newData = '';
+  if(id == null)
+    return currentFileData;
+  if(date == null)
+    date = new Date();
+  if(currentFileData == null)
+    throw "no file loaded";
 
   if(type == 'singlePost'){
 
@@ -66,11 +80,20 @@ function getNewFileData(type, id, currentFileData, date){
                   getLastMod(date) + 
                   '</url>' + 
                   currentFileData.slice(index);
-  }
+  } else 
+    return currentFileData;
 
   return newData;
+}
+
+function padFront(n){
+  if(n == null)
+    return err;
+
+  return n < 10 ? '0' + n : n;
 }
 
 exports.getLastMod = getLastMod;
 exports.getLoc = getLoc;
 exports.getNewFileData = getNewFileData;
+exports.padFront = padFront;
