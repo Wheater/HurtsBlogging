@@ -5,7 +5,7 @@ describe('app: authModule', function(){
   describe('factory: authFactory', function(){
     var factory = null;
     var httpBackend;
-		var $window;
+		var window;
 		var session;
 
     beforeEach(inject(function($http, $httpBackend, authFactory, _session_, _$window_){
@@ -14,7 +14,7 @@ describe('app: authModule', function(){
         .respond({authenticated: true});
       factory = authFactory;
 			session = _session_;
-			$window = _$window_;
+			window = _$window_;
     }));
 
     afterEach(function() {

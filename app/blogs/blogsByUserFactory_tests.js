@@ -24,7 +24,6 @@ describe('app: hurtApp', function(){
         .respond(200, '');
 
       var returnedPromise = factory.getBlogPostsByUser({
-        userId: 3
       });   
 
       var result;

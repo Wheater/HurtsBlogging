@@ -49,7 +49,6 @@ app.controller('NewPostController'
     //$scope.post.userId = 3;
     //add error handling...don't unload the form if
     //there was an error
-
     if($('#selFormer option:selected').index() == 0){
       blogPostInsertFactory.insertBlogPost({
         subject: $scope.formerPost.Subject,
@@ -108,7 +107,6 @@ app.controller('NewPostController'
                     == "<img "){
         stack = stack + "class=\"img-responsive\" ";
       }
-      console.log(stack);
       stack = stack + body.charAt(i);
     }
 

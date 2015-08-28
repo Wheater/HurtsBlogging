@@ -21,7 +21,7 @@ app.config(['$routeProvider', '$locationProvider',
             return blogPostFactory.getBlogPostsByType('All');
           },
           preview: function(){
-            return false;
+            return true;
           }
         }
       }).
@@ -79,6 +79,9 @@ app.config(['$routeProvider', '$locationProvider',
             return postStatusFactory.getPostStatuses();
           }
         }
+      }).
+      when('/sitemap.xml', {
+        templateUrl: 'sitemap.xml'
       }).
       otherwise({
         redirectTo: '/views/home'

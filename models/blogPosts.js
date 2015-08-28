@@ -221,12 +221,13 @@ exports.getPostsByType = function getPostsByType(type, callback){
                                     ", \"PostDate\" " +
                                     ", \"FirstName\" || \' \' || \"LastName\"  AS Name " +
                                     ", \"Type\" " +
+                                    ", B.\"ID\" AS BlogID " +
                               "FROM \"BlogPost\" B " +
                               "INNER JOIN \"Users\" U ON U.\"ID\" = B.\"UserID\" " +
                               "INNER JOIN \"BlogTypes\" T ON T.\"ID\" = B.\"BlogID\" " +
                               "INNER JOIN \"PostStatus\" P ON P.\"ID\" = B.\"PostStatusID\" " +
                               "WHERE P.\"Status\" = 'Post' " +
-                              "ORDER BY B.\"ID\" desc LIMIT 1;"      
+                              "ORDER BY B.\"ID\" desc LIMIT 20;"      
                             , function (err, rows, result){     
       if(err) {
         console.log(err);
