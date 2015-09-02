@@ -3,6 +3,8 @@ var router = express.Router();
 var blogPosts = require('../models/blogPosts');
 var blogTypes = require('../models/blogTypes');
 var users = require('../models/users');
+var sitmeap = require('../models/sitemap');
+var rss = require('../models/rss');
 var http = require('http');
 //var users = require('../models/users');
 
@@ -84,6 +86,17 @@ router.post('/api/v1/insertBlogPost', function(req, res) {
           console.log("Error inserting post: " + err);
           return err;
         }
+
+        /* -----RSS AND SITEMAP HANDLING ----- */
+        //add sitemap entry
+        sitemap.addToSitemap('singlePost', 10); //change to id later--------------------------
+        //add rss entry
+        rss.addRssEntry({
+          'subject': req.body.subject,
+          'body': req.body.body,
+          'id': 10 //change to id later-------------------
+        });
+
         //MUST SEND A RESPONSE
         console.log('Success inserting post');
         return res.send(result);

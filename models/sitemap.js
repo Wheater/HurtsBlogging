@@ -6,7 +6,7 @@ var exports = module.exports = {};
 //var users = require('../models/users');
 
 //add sitemap entry when new blogPost (or some future pages) are created
-router.get('/api/addSitemapEntry/:type/:id', function(req, res, next) {
+function addToSitemap(type, id) {
   
   var type = req.params.type;
   var id = req.params.id;  
@@ -94,3 +94,4 @@ exports.getLastMod = getLastMod;
 exports.getLoc = getLoc;
 exports.getNewFileData = getNewFileData;
 exports.padFront = padFront;
+exports.addToSitemap = addToSitemap;
