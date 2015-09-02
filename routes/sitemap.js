@@ -87,9 +87,6 @@ function getNewFileData(type, id, currentFileData, date){
 }
 
 function padFront(n){
-  if(n == null)
-    return err;
-
   return n < 10 ? '0' + n : n;
 }
 
