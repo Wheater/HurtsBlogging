@@ -1,6 +1,3 @@
-var express = require('express');
-var router = express.Router();
-var http = require('http');
 var fs = require('fs');
 var exports = module.exports = {};
 //var users = require('../models/users');
