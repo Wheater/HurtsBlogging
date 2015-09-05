@@ -4,19 +4,16 @@ var exports = module.exports = {};
 
 //add sitemap entry when new blogPost (or some future pages) are created
 function addToSitemap(type, id) {
-  
-  var type = req.params.type;
-  var id = req.params.id;  
 
   //read in current file first
-  fs.readFile('', function(err, data){
+  fs.readFile('./app/sitemap.xml', function(err, data){
   	if (err){
   	  console.log(err);
   	  return err;
   	}
   	
     //write out full new file
-	  fs.writeFile('/app/sitemap.xml'
+	  fs.writeFile('./app/sitemap.xml'
                , getNewFileData(type, id, data, new Date())
                , function (err) {
   	  if (err) 
@@ -25,7 +22,7 @@ function addToSitemap(type, id) {
 	  });
   });
 
-});
+};
 
 function getLastMod(date){
   //date look like: 2015-08-10-T03:35:15+00:00
@@ -35,7 +32,7 @@ function getLastMod(date){
 
   var dateString = date.getFullYear() + '-' + 
              padFront((date.getMonth()+1)) + '-' + 
-             (date.getDate()) + '-' +
+             padFront(date.getDate()) + '-' +
              'T' + padFront(date.getHours()) + ':' +
              padFront(date.getMinutes()) + ':' + 
              padFront(date.getSeconds()) + '+00:00';
@@ -69,14 +66,14 @@ function getNewFileData(type, id, currentFileData, date){
 
   if(type == 'singlePost'){
 
-    var index = currentFileData.indexOf("</urlset>");
+    var index = currentFileData.toString().indexOf("</urlset>");
 
-    newData = currentFileData.slice(0, index) + 
+    newData = currentFileData.toString().slice(0, index) + 
                   '<url>' + 
                   getLoc(type, id) + 
                   getLastMod(date) + 
                   '</url>' + 
-                  currentFileData.slice(index);
+                  currentFileData.toString().slice(index);
   } else 
     return currentFileData;
 

@@ -1,5 +1,6 @@
 var db = require('database');
 var users = require('../models/users');
+var util = require('util');
 /*
  * Gets latest blog posts to display on front page.
  */
@@ -104,6 +105,27 @@ exports.insertPost = function insertPost(data, callback){
     //this is a method of returning values asynchronously
     //rather than calling a return statement
     callback(err, result);
+  });
+};
+
+/*
+ * Gets ID of last inserted post. Meant to be run
+ * with insertPost for rss and sitemap handling
+ */
+exports.getPostCurVal = function getPostCurVal(callback){
+
+  var results = [];
+
+  var query = db.textQuery("SELECT MAX(\"ID\") FROM \"BlogPost\""
+                       , function (err, rows, result){ 
+    //console.log(util.inspect(rows, { showHidden: true, depth: null }));
+    if(err) {
+      console.log(err);
+      return;        
+    }
+    var retValue = rows[0].max;
+
+    callback(retValue);
   });
 };
 

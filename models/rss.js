@@ -9,15 +9,15 @@ function addRssEntry(blogPost){
   var body = blogPost.body;
 
   //read in current file first
-  fs.readFile('', function(err, data){
+  fs.readFile('./app/rss.xml', function(err, data){
   	if (err){
   	  console.log(err);
   	  return err;
   	}
   	
     //write out full new file
-	  fs.writeFile('/app/rss.xml'
-               , getNewFileData(type, id, data, new Date())
+	  fs.writeFile('./app/rss.xml'
+               , getNewFileData(subject, body, id, data)
                , function (err) {
   	  if (err) 
   	  	console.log(err);
@@ -59,12 +59,12 @@ function getNewFileData(subject, body, id, data){
     return data;
   if(data == null)
     throw "no file loaded";
-    
-  var index = data.indexOf("</channel>");
-
-  newData = data.slice(0, index) + 
-                generateEntry(subject, body, id) +
-                data.slice(index);
+  console.log('data: ' + data);
+  var index = data.toString().indexOf("</channel>");
+  //need to change generateEntry to parse out html from description
+  newData = data.toString().slice(0, index) + 
+                generateEntry(subject, subject, id) +
+                data.toString().slice(index);
     
   return newData;
 }
