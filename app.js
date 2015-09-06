@@ -26,6 +26,15 @@ app.use(express.static(path.join(__dirname, 'app')));
 app.use('/', routes);
 app.use('/', users);
 
+
+//matching for sitemap.xml file
+app.use('/sitemap', function(req, res) {
+    res.sendfile(__dirname + '/app/sitemap.xml');
+});
+//matching for sitemap.xml file
+app.use('/rss', function(req, res) {
+    res.sendfile(__dirname + '/app/rss.xml');
+});
 //only need in html5mode = true 
 //to redirect pages through index.html
 //http://stackoverflow.com/questions/16569841/angularjs-html5-mode-reloading-the-page-gives-wrong-get-request/16570533#16570533
