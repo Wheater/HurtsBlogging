@@ -32,7 +32,7 @@ function getLastMod(date){
 
   var dateString = date.getFullYear() + '-' + 
              padFront((date.getMonth()+1)) + '-' + 
-             padFront(date.getDate()) + '-' +
+             padFront(date.getDate()) +
              'T' + padFront(date.getHours()) + ':' +
              padFront(date.getMinutes()) + ':' + 
              padFront(date.getSeconds()) + '+00:00';

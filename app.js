@@ -37,6 +37,10 @@ app.use('/sitemap', function(req, res) {
 app.use('/rss', function(req, res) {
     res.sendfile(__dirname + '/app/rss.xml');
 });
+//matching for google verification file
+app.use('/googlef7034084d45fac75.html', function(req, res) {
+    res.sendfile(__dirname + '/googlef7034084d45fac75.html');
+});
 //only need in html5mode = true 
 //to redirect pages through index.html
 //http://stackoverflow.com/questions/16569841/angularjs-html5-mode-reloading-the-page-gives-wrong-get-request/16570533#16570533
