@@ -48,7 +48,7 @@ function generateEntry(subject, body, id){
   return '<item>' + 
           '<title>' + subject + '</title>' + 
           '<link>' + getUrl(id) + '</link>' + 
-          '<description>' + getDescription(body) + '</description>' + 
+          '<description><![CDATA[<html><body>' + body + '</body></html>]]></description>' + 
           '</item>'
 }
 
@@ -63,7 +63,7 @@ function getNewFileData(subject, body, id, data){
   var index = data.toString().indexOf("</channel>");
   //need to change generateEntry to parse out html from description
   newData = data.toString().slice(0, index) + 
-                generateEntry(subject, subject, id) +
+                generateEntry(subject, body, id) +
                 data.toString().slice(index);
     
   return newData;

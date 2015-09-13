@@ -15,9 +15,8 @@ app.controller('BlogListController'
                        , blogPostFactory
                        , data
                        , preview){
-  
   var wordCount = 100;
-
+  $scope.preview = preview;
   var noResultsPost = [{
     Subject: 'Sorry! The Hurts are napping right now...',
     Body: 'There are no posts available at this time, please check back soon!',

@@ -3,7 +3,8 @@ var app = angular.module('hurtApp',
                        , 'ngMessages'
                        , 'textAngular'
                        , 'angularUtils.directives.dirDisqus'
-											 , 'authModule']);
+											 , 'authModule'
+                       , 'SubscriberMod']);
 
 app.config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {

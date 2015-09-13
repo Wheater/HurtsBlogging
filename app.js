@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var subscribers = require('./routes/subscribers');
 
 var app = express();
 
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'app')));
 
 app.use('/', routes);
 app.use('/', users);
+app.use('/', subscribers);
 
 
 //matching for sitemap.xml file

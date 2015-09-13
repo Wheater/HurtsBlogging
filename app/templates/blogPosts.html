@@ -21,7 +21,8 @@
       </div>
       <div class="row">
         <div class="post-link col-xs-12 cold-md-10 col-md-offset-1"
-               ng-click="$parent.postClicked(post)">
+               ng-click="$parent.postClicked(post)"
+               ng-if="preview || $parent.preview">
             Read the full article here...
         </div>
       </div>

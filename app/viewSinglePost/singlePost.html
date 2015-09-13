@@ -1,9 +1,11 @@
 
 
-  <blog-list type="familyPosts"></blog-list>
-  <dir-disqus disqus-shortname="hurtsblogging"
-              disqus-identifier="{{ identifier }}"
-              disqus-url="{{ url }}"
-              class="col-xs-12 col-md-10 col-md-offset-1">
-  </dir-disqus>
-
+<blog-list type="familyPosts" preview="false"></blog-list>
+<div class="col-xs-4 col-xs-offset-4">
+  <subscribe></subscribe>
+</div>
+<dir-disqus disqus-shortname="hurtsblogging"
+            disqus-identifier="{{ identifier }}"
+            disqus-url="{{ url }}"
+            class="col-xs-12 col-md-10 col-md-offset-1">
+</dir-disqus>

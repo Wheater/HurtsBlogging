@@ -1,0 +1,53 @@
+<!-- Insert post view -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script src="../modules/SubscriberMod.js"></script>
+<style>
+  .error{
+    color: red;
+  }
+  .success{
+    color: green;
+  }
+</style>
+<div style="width:300px;">
+  <div ng-app="SubscriberMod">
+    <form class="simple-form text-center" name="subscribeForm" novalidate>
+      <div class="container-fluid">
+        <div class="row">
+          <label class="col-xs-12" for="input">Enter your email to subscribe</label>
+          <div style="padding-left:10px; padding-right:10px;">
+            <input type="email" name="input" ng-model="email" 
+                   class="form-control" id="email"
+                   required>
+             <div role="alert">
+               <span class="error" 
+                    ng-show="subscribeForm.input.$error.email">
+                  Please enter a valid email</span>
+               <span class="error" 
+                    ng-show="subscribeForm.input.$error.required &&
+                             subscribeForm.input.$dirty">
+                  Please enter an email
+               </span>
+             </div>
+          </div>
+          <div class="col-xs-12 form-group" style="padding-top: 10px;">
+            <input type="submit" ng-click="buttonClick(email)"
+                    id="btn-subscribe"
+                    value="Subscribe" class="btn btn-primary"
+                    ng-disabled="subscribeForm.$invalid"
+                    name="subscribeButton" />
+                    <br/>
+                    <br/>
+            <span class="error"
+                  ng-show="error">Error subscribing - please try again
+            </span>
+            <span class="success"
+                  ng-show="success">Thanks for subscribing!
+            </span>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
