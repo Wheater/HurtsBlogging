@@ -45,6 +45,15 @@ app.controller('NewPostController'
     }
   }
 
+  $scope.$on('$locationChangeStart', function( event ) {
+    if($scope.postForm.$dirty){
+      var answer = confirm("Are you sure you want to leave this page?")
+      if (!answer) {
+          event.preventDefault();
+      }
+    }
+  });
+
   $scope.submit = function(post){
     //$scope.post.userId = 3;
     //add error handling...don't unload the form if
