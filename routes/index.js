@@ -55,12 +55,22 @@ router.get('/api/v1/getBlogPosts', function(req, res) {
     //var data = {count: req.body.count}
 });
 
-router.post('/api/v1/deleteBlogPost', function(req, res) {
+router.post('/api/v1/deleteBlogPostById', function(req, res) {
   //update post to "deleted" 0 -> 1
-  //delete rss entry
-  rss.removeRssEntry(req.body.blogId);
-  //delete sitemap entry
-  sitemap.removeFromSitemap(req.body.blogId);
+  blogPosts.deletePostById(req.body.blogId, function(result){
+
+    if(result.rowCount === 1){
+      rss.removeRssEntry(req.body.blogId);
+      sitemap.removeFromSitemap(req.body.blogId);
+      return res.status(200).json({
+        result: 'Post deleted'
+      });
+    } else if (result.rowCount === 0){
+      return res.json({
+        err: 'Trouble finding that post, could not delete it.'
+      });
+    }
+  });
 });
 
 //Insert blog post

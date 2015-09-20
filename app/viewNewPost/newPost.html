@@ -89,11 +89,22 @@
                   value="Save" class="btn btn-primary"
                   ng-disabled="postForm.$invalid"
                   name="blogType" />
+          
+          <input type="submit" ng-click="delete(formerPost.blogid)"
+                  id="btnDelete" value="Delete"
+                  class="btn btn-danger disabled">
+
           <span class="error-message"
                 ng-show="errorMessage">Error inserting or updating post
           </span>
           <span class="success-message"
                 ng-show="successMessage">New post created!
+          </span>
+          <span class="success-message"
+                ng-show="deleteSuccessMessage">Post deleted
+          </span>
+          <span class="error-message"
+                ng-show="deleteErrorMessage">Error deleting post
           </span>
         </div>
       </div>

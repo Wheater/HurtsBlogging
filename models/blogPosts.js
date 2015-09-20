@@ -37,6 +37,21 @@ exports.getPostFeed = function getPostFeed(count, callback){
   });
 };
 
+exports.deletePostById = function deletePostById(id, callback){
+  // SQL Query > Select Data
+  var query = db.textQuery("DELETE FROM \"BlogPost\" WHERE \"ID\" = $1 "
+                          , [id]
+                          , function (err, rows, result){     
+    if(err) {
+      console.log(err);
+      return;        
+    }
+
+    console.log('rows: ' + rows + '\nresult: ' + result);
+
+    callback(result);
+  });
+}
 /*
  * Gets blog post by id
  */

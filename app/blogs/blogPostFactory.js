@@ -33,6 +33,11 @@ app.factory('blogPostFactory', ['$http', function($http) {
           });
 
           return promise;
+        },
+        deleteBlogPostById: function(id){
+          var promise = $http.post('/api/v1/deleteBlogPostById', {blogId: id});
+
+          return promise;
         }
       }
   }]);

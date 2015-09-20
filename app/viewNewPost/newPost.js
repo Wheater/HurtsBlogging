@@ -6,11 +6,13 @@ app.controller('NewPostController'
 					, '$window'
 					, '$location'
           , 'blogPostInsertFactory'
+          , 'blogPostFactory'
           , 'blogTypes'
           , 'blogList'
           , 'statusList'
 					, 'authFactory'
-          , function($scope, $rootScope, $window, $location, blogPostInsertFactory, blogTypes, blogList, statusList, authFactory){
+          , function($scope, $rootScope, $window, $location, blogPostInsertFactory
+                    , blogPostFactory, blogTypes, blogList, statusList, authFactory){
 
 	//check if user is logged in
 	if ($rootScope.loggedIn == false) {
@@ -40,12 +42,14 @@ app.controller('NewPostController'
 
     if($('#selFormer option:selected').index() != 0){
       $scope.postForm.subject.$setValidity('required', true);
+      $('#btnDelete').removeClass("disabled");
     } else{
       $scope.postForm.subject.$setValidity('required', false);
+      $('#btnDelete').addClass("disabled");
     }
   }
 
-  $scope.$on('$locationChangeStart', function( event ) {
+  $scope.$on('$locationChangeStart', function(event) {
     if($scope.postForm.$dirty){
       var answer = confirm("Are you sure you want to leave this page?")
       if (!answer) {
@@ -53,6 +57,23 @@ app.controller('NewPostController'
       }
     }
   });
+
+  $scope.delete = function(id){
+    blogPostFactory.deleteBlogPostById(id).
+      success(function(data, status, headers, config){
+        if(data.result){
+          $scope.deleteErrorMessage = false;
+          $scope.deleteSuccessMessage = true; 
+        } else if(data.err){
+          $scope.deleteErrorMessage = true;
+          $scope.deleteSuccessMessage = false;
+        }
+      }).
+      error(function(data, status, headers, config){
+        $scope.deleteErrorMessage = true;
+        $scope.deleteSuccessMessage = false;
+      });
+  }
 
   $scope.submit = function(post){
     //$scope.post.userId = 3;
