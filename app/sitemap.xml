@@ -42,8 +42,13 @@
   <loc>http://hurtsblogging.com/views/singlePost/8</loc>
   <lastmod>2015-08-10T03:35:15+00:00</lastmod>
 </url>
+
 <url>
-  <loc>http://hurtsblogging.com/views/singlePost/10</loc>
-  <lastmod>2015-08-10-T03:35:15+00:00</lastmod>
+    <loc>http://hurtsblogging.com/views/singlePost/13</loc>
+    <lastmod>2015-08-10T03:35:15+00:00</lastmod>
+</url>
+<url>
+    <loc>http://hurtsblogging.com/views/singlePost/14</loc>
+    <lastmod>2015-08-10T03:35:15+00:00</lastmod>
 </url>
 </urlset>

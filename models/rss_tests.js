@@ -1,9 +1,18 @@
 var rss = require('./rss.js');
 
 exports.getUrlTest = function(test){
-	test.equal(rss.getUrl(10), 'http://hurtsblogging.com/views/singlePost/10', 'id + root = correct entry');
-	test.throws(function(){rss.getUrl(null)}, "no id given", "null id throws");
-	test.throws(function(){rss.getUrl(0)}, "no id given", "id <= 0 throws");
+	test.equal(rss.getUrl(10, 'test test'), 'http://hurtsblogging.com/views/singlePost/10/test-test', 'id + root = correct entry');
+	test.throws(function(){rss.getUrl(null, 'test test')}, "no id given", "null id throws");
+	test.throws(function(){rss.getUrl(0, 'test test')}, "no id given", "id <= 0 throws");
+	test.done();
+}
+
+exports.updateDataTest = function(test){
+	var result = rss.updateData(0, 10, newFile);
+	//come back to this later.
+	test.equal(result
+					  , shortenedFile
+					  , "given a match, should remove the url");
 	test.done();
 }
 
@@ -24,6 +33,7 @@ exports.getDescriptionTest = function(test){
 	test.done();
 }
 
-var url = '<item><title>SQL Test Smell</title><link>http://hurtsblogging.com/views/singlePost/10</link><description><![CDATA[<html><body>Catching SQL errors by code and test smell</body></html>]]></description></item>';
-var xmlFile = '<?xml version="1.0" encoding="UTF-8" ?><rss version="2.0"><channel><title>Hurts Blogging</title><link>http://www.hurtsblogging.com</link><description>Family and Software Blog</description><item><title>SQL Test Smell</title><link>http://hurtsblogging.com/views/singlePost/10</link><description>Catching SQL errors by code and test smell</description></item></channel></rss>';
-var newFile = '<?xml version="1.0" encoding="UTF-8" ?><rss version="2.0"><channel><title>Hurts Blogging</title><link>http://www.hurtsblogging.com</link><description>Family and Software Blog</description><item><title>SQL Test Smell</title><link>http://hurtsblogging.com/views/singlePost/10</link><description>Catching SQL errors by code and test smell</description></item><item><title>SQL Test Smell</title><link>http://hurtsblogging.com/views/singlePost/10</link><description><![CDATA[<html><body>Catching SQL errors by code and test smell</body></html>]]></description></item></channel></rss>';
+var url = '<item><title>SQL Test Smell</title><link>http://hurtsblogging.com/views/singlePost/10/SQL-Test-Smell</link><description><![CDATA[<html><body>Catching SQL errors by code and test smell</body></html>]]></description></item>';
+var xmlFile = '<?xml version="1.0" encoding="UTF-8" ?><rss version="2.0"><channel><title>Hurts Blogging</title><link>http://www.hurtsblogging.com</link><description>Family and Software Blog</description><item><title>SQL Test Smell</title><link>http://hurtsblogging.com/views/singlePost/10/SQL-Test-Smell</link><description>Catching SQL errors by code and test smell</description></item></channel></rss>';
+var newFile = '<?xml version="1.0" encoding="UTF-8" ?><rss version="2.0"><channel><title>Hurts Blogging</title><link>http://www.hurtsblogging.com</link><description>Family and Software Blog</description><item><title>SQL Test Smell</title><link>http://hurtsblogging.com/views/singlePost/10/SQL-Test-Smell</link><description>Catching SQL errors by code and test smell</description></item><item><title>SQL Test Smell</title><link>http://hurtsblogging.com/views/singlePost/10/SQL-Test-Smell</link><description><![CDATA[<html><body>Catching SQL errors by code and test smell</body></html>]]></description></item></channel></rss>';
+var shortenedFile = '<?xml version="1.0" encoding="UTF-8" ?><rss version="2.0"><channel><title>Hurts Blogging</title><link>http://www.hurtsblogging.com</link><description>Family and Software Blog</description><item><title>SQL Test Smell</title><link>http://hurtsblogging.com/views/singlePost/10/SQL-Test-Smell</link><description><![CDATA[<html><body>Catching SQL errors by code and test smell</body></html>]]></description></item></channel></rss>';

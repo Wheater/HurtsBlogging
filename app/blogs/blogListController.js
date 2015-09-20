@@ -40,7 +40,8 @@ app.controller('BlogListController'
       } 
     } else {
         $scope.identifier = data.data[0].blogid;
-        $scope.url = 'http://www.hurtsblogging.com/views/singlePost/' + data.data[0].blogid;
+        $scope.url = 'http://www.hurtsblogging.com/views/singlePost/' + 
+                      data.data[0].blogid + '/' + replaceWhiteSpace(data.data[0].Subject);
       }
     $scope.familyPosts = data.data;
     $scope.familyPosts.Body = $sce.trustAsHtml(data.data.Body);
@@ -50,3 +51,7 @@ app.controller('BlogListController'
     $scope.homePosts.Body = $sce.trustAsHtml(data.data.Body);
   }
 }]);
+
+function replaceWhiteSpace(input){
+  return input.replace(/\s/g, "-");
+}

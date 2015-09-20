@@ -54,7 +54,7 @@ app.config(['$routeProvider', '$locationProvider',
           }
         }
       }).
-      when('/views/singlePost/:id', {
+      when('/views/singlePost/:id/:subject', {
         templateUrl: 'viewSinglePost/singlePost.html',
         controller: 'BlogListController',
         resolve: {

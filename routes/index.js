@@ -55,6 +55,14 @@ router.get('/api/v1/getBlogPosts', function(req, res) {
     //var data = {count: req.body.count}
 });
 
+router.post('/api/v1/deleteBlogPost', function(req, res) {
+  //update post to "deleted" 0 -> 1
+  //delete rss entry
+  rss.removeRssEntry(req.body.blogId);
+  //delete sitemap entry
+  sitemap.removeFromSitemap(req.body.blogId);
+});
+
 //Insert blog post
 router.post('/api/v1/insertBlogPost', function(req, res) {
 
@@ -80,6 +88,7 @@ router.post('/api/v1/insertBlogPost', function(req, res) {
       });
     } //post if user is authenticated 
     else {
+
       blogPosts.insertPost(data, function(err, result){
 
         if(err){
@@ -88,18 +97,17 @@ router.post('/api/v1/insertBlogPost', function(req, res) {
         }
         blogPosts.getPostCurVal(function(result){
           var id = result;
-          /* -----RSS AND SITEMAP HANDLING ----- */
-          //add sitemap entry
-          if(id != null){
-            sitemap.addToSitemap('singlePost', id); //change to id later--------------------------
-            //add rss entry
+
+          if(id != null && req.body.postStatusId === 3){
+            sitemap.addToSitemap('singlePost', id, req.body.subject); 
+
             rss.addRssEntry({
               'subject': req.body.subject,
               'body': req.body.body,
-              'id': id //change to id later-------------------
+              'id': id 
             });
           }
-          //MUST SEND A RESPONSE
+
           console.log('Success inserting post');
           return res.send(result);
         });
@@ -118,6 +126,7 @@ router.post('/api/v1/updateBlogPost', function(req, res) {
               , req.body.blogTypeId
               , req.body.postStatusId
             ];
+    var id = req.body.blogId;
 
     var currentUser = req.body.userId;
 
@@ -148,16 +157,28 @@ router.post('/api/v1/updateBlogPost', function(req, res) {
             console.log("Error updating post: " + err);
             return err;
           }
+
+          //handle rss and sitemap on update 
+          if(req.body.postStatusId === 3){
+            sitemap.addToSitemap('singlePost', id, req.body.subject); 
+
+            rss.addRssEntry({
+              'subject': req.body.subject,
+              'body': req.body.body,
+              'id': id
+            });
+          } else if(id != null && req.body.postStatusId !== 3){
+            sitemap.removeFromSitemap(id); 
+            rss.removeRssEntry(id);
+          }
+
           //MUST SEND A RESPONSE
           console.log('Success updating post');
           return res.send(result);
 
         });
       }
-    });
-    
-  
-    
+    });   
 });
 
 //Get blog posts
