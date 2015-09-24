@@ -6,10 +6,24 @@
   color: green;
 }
 
+.rss-btn {
+  height:28px;
+  width:28px;
+  background-image:url(../images/rss-icon.png);
+  display: inline-block;
+  vertical-align: middle;
+  padding: 10px;
+}
+
 .hb-modal-sm{
   padding: 20px;
   color: green;
   cursor: pointer;
+}
+
+.rss-modal{
+  padding: 20px;
+  color: green;
 }
 
 .post-link{
