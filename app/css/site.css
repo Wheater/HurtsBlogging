@@ -9,6 +9,7 @@
 .hb-modal-sm{
   padding: 20px;
   color: green;
+  cursor: pointer;
 }
 
 .post-link{
