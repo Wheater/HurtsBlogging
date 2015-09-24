@@ -176,7 +176,49 @@ exports.updatePost = function updatePost(post, callback){
 
 };
 
+exports.getEmailSentByBlogId = function getEmailSentByBlogId(id, callback){
 
+  var query = db.textQuery("SELECT \"EmailSent\" " +
+                          " FROM \"BlogPost\" " +
+                          " WHERE \"ID\" = $1"
+                          , [id]
+                          , function (err, rows, result){     
+    if(err) {
+      console.log(err);
+      return;        
+    }
+
+    //this is a method of returning values asynchronously
+    //rather than calling a return statement
+    callback(rows[0]);
+  });
+}
+
+
+exports.getSubscribersByBlogType = function getSubscribersByBlogType(id, callback){
+
+  var results = [];
+
+  var query = db.textQuery("SELECT \"Email\" " +
+                          " FROM \"Subscribers\" " +
+                          " WHERE \"BlogTypeID\" = $1"
+                          , [id]
+                          , function (err, rows, result){     
+    if(err) {
+      console.log(err);
+      return;        
+    }
+
+    // Stream results back one row at a time
+    for(var i = 0; i < rows.length; i++){
+      results.push(rows[i]);
+    }
+
+    //this is a method of returning values asynchronously
+    //rather than calling a return statement
+    callback(results);
+  });
+}
 /*
  * Gets posts per user id for editing
  */

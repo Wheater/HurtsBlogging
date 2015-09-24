@@ -19,6 +19,9 @@ app.controller('NewPostController'
 		$location.path("views/login");
 	}				
 
+  var redirectId = 0;
+  var redirectSubject = '';
+
   $scope.blogTypes = blogTypes.data;
   $scope.blogList = blogList.data;
   $scope.statusList = statusList.data;
@@ -47,6 +50,15 @@ app.controller('NewPostController'
       $scope.postForm.subject.$setValidity('required', false);
       $('#btnDelete').addClass("disabled");
     }
+  }
+
+  $scope.seeNewPost = function(){
+    $('#postModal').modal('hide');
+    $('#draftModal').modal('hide');
+    $location.path("views/singlePost/" + 
+                    redirectId + 
+                    '/' + 
+                    redirectSubject);
   }
 
   $scope.$on('$locationChangeStart', function(event) {
@@ -89,7 +101,8 @@ app.controller('NewPostController'
         //idToken used to verify user before allowing post
         idToken: $rootScope.googleUser.getBasicProfile().getId()
       });
-
+      $('#postModal').modal('toggle');
+      setRedirectValues();
       $scope.formerPost = null;
       $scope.postForm.$setPristine();
       $scope.postForm.$setUntouched();
@@ -113,6 +126,12 @@ app.controller('NewPostController'
             $scope.successMessage = false;
             return;
           }
+          if($scope.formerPost.PostStatusID === 3){
+            $('#postModal').modal('toggle');
+          } else {
+            $('#draftModal').modal('toggle');
+          }
+          setRedirectValues();
           $scope.formerPost = null;
           $scope.postForm.$setPristine();
           $scope.postForm.$setUntouched();
@@ -125,6 +144,11 @@ app.controller('NewPostController'
           return;
         });
     }
+  }
+
+  function setRedirectValues(){
+    redirectId = $scope.formerPost.blogid;
+    redirectSubject = $scope.formerPost.Subject;
   }
 
   function makeImagesResponsive(body){

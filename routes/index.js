@@ -6,8 +6,7 @@ var users = require('../models/users');
 var sitemap = require('../models/sitemap');
 var rss = require('../models/rss');
 var http = require('http');
-//var users = require('../models/users');
-
+var mailer = require('../models/mailer');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -116,6 +115,13 @@ router.post('/api/v1/insertBlogPost', function(req, res) {
               'body': req.body.body,
               'id': id 
             });
+
+            
+            //send email if status is Post
+            if(req.body.postStatusId === 3){
+              
+            }
+
           }
 
           console.log('Success inserting post');
