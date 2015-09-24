@@ -120,14 +120,14 @@
     <!-- Small modal -->
     <div class="modal fade bs-example-modal-sm" id="draftModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
       <div class="modal-dialog modal-sm">
-        <div class="modal-content hb-modal-sm text-center">
+        <div class="modal-content hb-modal-sm text-center" ng-click="hideModal()">
           <strong><p>Draft saved!</p></strong>
         </div>
       </div>
     </div>
     <div class="modal fade bs-example-modal-sm" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
       <div class="modal-dialog modal-sm">
-        <div class="modal-content hb-modal-sm text-center" style="color: red;">
+        <div class="modal-content hb-modal-sm text-center" style="color: red;" ng-click="hideModal()">
           <strong><p>Post deleted :(</p></strong>
         </div>
       </div>

@@ -52,6 +52,11 @@ app.controller('NewPostController'
     }
   }
 
+  $scope.hideModal = function(){
+    $('#draftModal').modal('hide');
+    $('#deleteModal').modal('hide');
+  }
+
   $scope.seeNewPost = function(){
     $('#postModal').modal('hide');
     $('#draftModal').modal('hide');
