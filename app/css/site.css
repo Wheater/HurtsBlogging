@@ -6,10 +6,6 @@
   color: green;
 }
 
-.share-buttons{
-  list-style: none;
-}
-
 .twitter-share-button{ 
   vertical-align: middle;
 }
@@ -36,6 +32,7 @@
 .rss-modal{
   padding: 20px;
   color: green;
+  cursor: text;
 }
 
 .post-link{
