@@ -6,6 +6,18 @@
   color: green;
 }
 
+.share-buttons{
+  list-style: none;
+}
+
+.twitter-share-button{ 
+  vertical-align: middle;
+}
+
+.fb-share-button{ 
+  vertical-align: middle;
+}
+
 .rss-btn {
   height:28px;
   width:28px;

@@ -39,9 +39,11 @@ app.controller('BlogListController'
         data.data[j].Body = bodyArray.join(' ');
       } 
     } else {
+      //handling directive info
         $scope.identifier = data.data[0].blogid;
         $scope.url = 'http://www.hurtsblogging.com/views/singlePost/' + 
                       data.data[0].blogid + '/' + replaceWhiteSpace(data.data[0].Subject);
+        $scope.twitterText = data.data[0].Subject;
       }
     $scope.familyPosts = data.data;
     $scope.familyPosts.Body = $sce.trustAsHtml(data.data.Body);
