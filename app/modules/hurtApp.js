@@ -84,6 +84,9 @@ app.config(['$routeProvider', '$locationProvider',
       when('/sitemap.xml', {
         templateUrl: 'sitemap.xml'
       }).
+      when('/rss', {
+        templateUrl: '/rss.xml'
+      }).
       otherwise({
         redirectTo: '/views/home'
       });

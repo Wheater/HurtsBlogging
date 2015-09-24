@@ -55,6 +55,7 @@ app.controller('NewPostController'
   $scope.seeNewPost = function(){
     $('#postModal').modal('hide');
     $('#draftModal').modal('hide');
+    $('#deleteModal').modal('hide');
     $location.path("views/singlePost/" + 
                     redirectId + 
                     '/' + 
@@ -62,7 +63,7 @@ app.controller('NewPostController'
   }
 
   $scope.$on('$locationChangeStart', function(event) {
-    if($scope.postForm.$dirty){
+    if($scope.postForm.$dirty && $scope.postForm.$touched){
       var answer = confirm("Are you sure you want to leave this page?")
       if (!answer) {
           event.preventDefault();
@@ -76,6 +77,11 @@ app.controller('NewPostController'
         if(data.result){
           $scope.deleteErrorMessage = false;
           $scope.deleteSuccessMessage = true; 
+          $('#deleteModal').modal('toggle');
+          $scope.postForm.$setPristine();
+          $scope.postForm.$setUntouched();
+          $scope.formerPost = null;
+          $scope.digest();
         } else if(data.err){
           $scope.deleteErrorMessage = true;
           $scope.deleteSuccessMessage = false;
@@ -101,7 +107,6 @@ app.controller('NewPostController'
         //idToken used to verify user before allowing post
         idToken: $rootScope.googleUser.getBasicProfile().getId()
       });
-      $('#postModal').modal('toggle');
       setRedirectValues();
       $scope.formerPost = null;
       $scope.postForm.$setPristine();
@@ -109,6 +114,7 @@ app.controller('NewPostController'
       $scope.errorMessage = false;
       $scope.successMessage = true;
       $scope.digest();
+      $('#postModal').modal('toggle');
     } else {
         blogPostInsertFactory.updateBlogPost({
           subject: $scope.formerPost.Subject,
