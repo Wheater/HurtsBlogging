@@ -1,34 +1,29 @@
-var nodemailer = require('nodemailer');
+var email = require("emailjs");
+var util = require('util');
+var config = require('../models/mailerConfig');
 
-var mailFrom = 'hurtsblogging.noreply@gmail.com';
-// create reusable transporter object using SMTP transport
-var transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-        user: 'hurtsblogging.noreply@gmail.com',
-        pass: '!Bulerias1?'
-    }
-});
+exports.sendEmail = function sendEmail(emailInfo, callback) {
 
-exports.emailBlast = function emailBlast(recipients, subject, body, cb){  
-  // NB! No need to recreate the transporter object. You can use
-  // the same transporter object for all e-mails
-  // setup e-mail data with unicode symbols
-  for(var i = 0; i < recipients.length; i++){
-    var mailOptions = {
-      from: mailFrom,
-      to: mailTo,
-      subject: subject,
-      html: body
-    };
+    var server  = email.server.connect({
+        user: config.user, 
+        password: config.password, 
+        host: "marten.arvixe.com", 
+        ssl: true
+    });
 
-    // send mail with defined transport object
-    transporter.sendMail(mailOptions, function(error, info){
-        if(error){
-            console.log(error);
-            return cb({err: error});
-        }
-        return cb({info: info});
-    }); 
-  }
+    console.log(util.inspect(emailInfo));
+    //setting the attachment field sends as HTML 
+    //send as plain text without it
+    server.send({
+        text:    emailInfo.msg, 
+        from:    emailInfo.from, 
+        to:      emailInfo.to,
+        subject: emailInfo.subject,
+        attachment: [{data: emailInfo.msg, alternative:true}]
+        }, function(err, message) {
+          if(err)
+            callback(err);
+          else
+            callback(message);
+    });
 }

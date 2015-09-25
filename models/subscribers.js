@@ -28,7 +28,7 @@ exports.addSubscriber = function addSubscriber(email, blogId, callback){
     //rather than calling a return statement
     callback(err, result);
   });
-}
+};
 //---------FINISH----------// ------NOT THE RIGHT QUERY ---- using doens't do what I thought it did
 exports.removeSubscriber = function removeSubscriber(email, callback){
 
@@ -45,5 +45,49 @@ exports.removeSubscriber = function removeSubscriber(email, callback){
     //this is a method of returning values asynchronously
     //rather than calling a return statement
     callback(err, result);
+  });
+}
+
+exports.getEmailSentByBlogId = function getEmailSentByBlogId(id, callback){
+
+  var query = db.textQuery("SELECT \"EmailSent\" " +
+                        " FROM \"BlogPost\" " +
+                        " WHERE \"ID\" = $1"
+                        , [id]
+                        , function (err, rows, result){     
+    if(err) {
+      console.log(err);
+      return;        
+    }
+
+    //this is a method of returning values asynchronously
+    //rather than calling a return statement
+    callback(rows[0]);
+  });
+}
+
+
+exports.getSubscribersByBlogType = function getSubscribersByBlogType(id, callback){
+
+  var results = [];
+  console.log('id' + id);
+  var query = db.textQuery("SELECT \"Email\" " +
+                          " FROM \"Subscribers\" " +
+                          " WHERE \"BlogTypeID\" = $1"
+                          , [id]
+                          , function (err, rows, result){     
+    if(err) {
+      console.log(err);
+      return;        
+    }
+
+    // Stream results back one row at a time
+    for(var i = 0; i < rows.length; i++){
+      results.push(rows[i]);
+    }
+    console.log('subscribers: ' + util.inspect(results));
+    //this is a method of returning values asynchronously
+    //rather than calling a return statement
+    callback(results);
   });
 }

@@ -33,7 +33,7 @@ function removeRssEntry(id){
       console.log(err);
       return err;
     }
-    console.log(data.toString());
+
     //write out full new file
     fs.writeFile('./app/rss.xml'
                , updateData(0, id, data)

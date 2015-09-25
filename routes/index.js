@@ -7,6 +7,8 @@ var sitemap = require('../models/sitemap');
 var rss = require('../models/rss');
 var http = require('http');
 var mailer = require('../models/mailer');
+var subscribers = require('../models/subscribers');
+var util = require('util');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -116,12 +118,23 @@ router.post('/api/v1/insertBlogPost', function(req, res) {
               'id': id 
             });
 
-            
-            //send email if status is Post
             if(req.body.postStatusId === 3){
-              
-            }
 
+              subscribers.getSubscribersByBlogType(req.body.blogId, function(results){
+
+                for(var i = 0; i < results.length; i++){
+                //send email if status is Post
+                setTimeout(mailer.sendEmail({
+                    msg: req.body.body,
+                    from: 'blog@hurtsblogging.com', 
+                    to: results[i].Email.toString(),
+                    subject: req.body.subject
+                  }, function callback(result){
+                    console.log(result);
+                  }), 5000);
+                }
+              }); 
+            }
           }
 
           console.log('Success inserting post');
@@ -183,6 +196,22 @@ router.post('/api/v1/updateBlogPost', function(req, res) {
               'body': req.body.body,
               'id': id
             });
+
+            subscribers.getSubscribersByBlogType(req.body.blogTypeId, function(results){
+
+              for(var i = 0; i < results.length; i++){
+              //send email if status is Post
+              setTimeout(mailer.sendEmail({
+                  msg: req.body.body,
+                  from: 'blog@hurtsblogging.com', 
+                  to: results[i].Email.toString(),
+                  subject: req.body.subject
+                }, function callback(result){
+                  console.log(result);
+                }), 5000);
+              }
+            }); 
+
           } else if(id != null && req.body.postStatusId !== 3){
             sitemap.removeFromSitemap(id); 
             rss.removeRssEntry(id);

@@ -29,7 +29,7 @@ function removeFromSitemap(id){
       console.log(err);
       return err;
     }
-    console.log(data.toString());
+
     //write out full new file
     fs.writeFile('./app/sitemap.xml'
                , updateData(0, id, data)
