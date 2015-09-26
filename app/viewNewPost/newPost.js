@@ -55,9 +55,10 @@ app.controller('NewPostController'
   $scope.hideModal = function(){
     $('#draftModal').modal('hide');
     $('#deleteModal').modal('hide');
+    $('#postModal').modal('hide');
   }
 
-  $scope.seeNewPost = function(){
+  $scope.seeNewPost = function(post){
     $('#postModal').modal('hide');
     $('#draftModal').modal('hide');
     $('#deleteModal').modal('hide');
@@ -112,6 +113,7 @@ app.controller('NewPostController'
         //idToken used to verify user before allowing post
         idToken: $rootScope.googleUser.getBasicProfile().getId()
       });
+      $('#postModal').modal('toggle');
       setRedirectValues();
       $scope.formerPost = null;
       $scope.postForm.$setPristine();
@@ -119,7 +121,7 @@ app.controller('NewPostController'
       $scope.errorMessage = false;
       $scope.successMessage = true;
       $scope.digest();
-      $('#postModal').modal('toggle');
+      
     } else {
         blogPostInsertFactory.updateBlogPost({
           subject: $scope.formerPost.Subject,

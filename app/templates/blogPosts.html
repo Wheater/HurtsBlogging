@@ -6,8 +6,10 @@
     			<div class="blog-subject"
                ng-click="$parent.postClicked(post)"
                style="cursor: pointer;">
-    			  <h3>{{post.Subject}}</h3>
-    			</div>
+            <a style="text-decoration: none; color: black;" ng-click="$parent.postClicked(post)">
+              <h3 style="padding: 10px;">{{post.Subject}}</h3>
+            </a>
+          </div>
         </div>
       </div>
       <div class="row">
